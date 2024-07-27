@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Background Image Slideshow</title>
+    <style>
+        #myElement {
+            width: 100%;
+            height: 300px;
+            background-image: url('images/image1.jpg');
+            background-size: cover;
+            background-position: center;
+            transition: background-image 1s ease-in-out;
+        }
+
+        .slide-in {
+            animation: slideIn 1s forwards;
+        }
+
+        @keyframes slideIn {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="myElement"></div>
+    <button onclick="startSlideshow()">Start Slideshow</button>
+
+    <script>
+        const images = [
+        'Assets/Slideshow/1.jpg',
+        'Assets/Slideshow/2.jpg',
+        'Assets/Slideshow/3.jpg',
+        'Assets/Slideshow/4.jpg'
+            
+        ];
+        let currentImageIndex = 0;
+
+        function changeBackgroundImage() {
+            const element = document.getElementById('myElement');
+            element.classList.remove('slide-in'); // Reset animation
+            void element.offsetWidth; // Trigger reflow to restart the animation
+
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            element.style.backgroundImage = `url('${images[currentImageIndex]}')`;
+            element.classList.add('slide-in');
+        }
+
+        function startSlideshow() {
+            setInterval(changeBackgroundImage, 3000); // Change image every 3 seconds
+        }
+    </script>
+</body>
+</html>
